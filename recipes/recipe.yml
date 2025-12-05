@@ -20,6 +20,10 @@ modules:
         - util-linux-script
         - rpmconf
         - qemu-guest-agent
+        - cockpit-podman
+        - cockpit-ostree
+        - cockpit-selinux
+        - cockpit-storaged
     remove:
       packages:
         - nano
