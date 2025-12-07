@@ -1,15 +1,20 @@
-# image will be published to ghcr.io/<user>/<name>
-name: server 
-# description will be included in the image's metadata
+name: server
 description: Custom Fedora CoreOS Server
 
-# the base image to build on top of (FROM) and the version tag to use
-# base-image: ghcr.io/ublue-os/ucore
-base-image: quay.io/fedora/fedora-coreos 
-image-version: stable # latest is also supported if you want new updates ASAP
+base-image: quay.io/fedora/fedora-coreos
+image-version: stable
 
 modules:
   - type: dnf
+    repos:
+      copr:
+        - atim/starship
+      rpm:
+        - name: tailscale
+          baseurl: https://pkgs.tailscale.com/stable/fedora/$releasever/$basearch
+          enabled: true
+          gpgcheck: true
+          gpgkey: https://pkgs.tailscale.com/stable/fedora/repo.gpg
     install:
       packages:
         - vim
@@ -24,20 +29,16 @@ modules:
         - cockpit-ostree
         - cockpit-selinux
         - cockpit-storaged
+        - tailscale
+        - starship
     remove:
       packages:
         - nano
-  - type: dnf
-    repos:
-      copr:
-        - atim/starship
-    install:
-      packages:
-        - starship
+
   - type: systemd
-# Disabled Zincadi due to making custom image 
     system:
       disabled:
         - zincati.service
+
   - type: signing
 
