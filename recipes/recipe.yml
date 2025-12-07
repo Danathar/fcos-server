@@ -6,7 +6,7 @@ image-version: stable
 
 modules:
   - type: copy
-    src: tailscale.repo
+    src: recipes/tailscale.repo
     dest: /etc/yum.repos.d/tailscale.repo
 
   - type: dnf
