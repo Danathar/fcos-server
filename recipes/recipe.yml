@@ -5,16 +5,17 @@ base-image: quay.io/fedora/fedora-coreos
 image-version: stable
 
 modules:
+  - type: files
+    files:
+      /etc/yum.repos.d/tailscale.repo: |
+        [tailscale]
+        name=Tailscale stable
+        baseurl=https://pkgs.tailscale.com/stable/fedora/$releasever/$basearch
+        enabled=1
+        gpgcheck=1
+        gpgkey=https://pkgs.tailscale.com/stable/fedora/repo.gpg
+
   - type: dnf
-    repos:
-      copr:
-        - atim/starship
-      rpm:
-        - name: tailscale
-          baseurl: https://pkgs.tailscale.com/stable/fedora/$releasever/$basearch
-          enabled: true
-          gpgcheck: true
-          gpgkey: https://pkgs.tailscale.com/stable/fedora/repo.gpg
     install:
       packages:
         - vim
@@ -30,10 +31,17 @@ modules:
         - cockpit-selinux
         - cockpit-storaged
         - tailscale
-        - starship
     remove:
       packages:
         - nano
+
+  - type: dnf
+    repos:
+      copr:
+        - atim/starship
+    install:
+      packages:
+        - starship
 
   - type: systemd
     system:
