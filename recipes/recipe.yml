@@ -14,10 +14,6 @@ modules:
       packages:
         - vim
         - btop
-        - zsh
-        - atuin
-        - podlet
-        - util-linux-script
         - rpmconf
         - qemu-guest-agent
         - cockpit-podman
@@ -28,14 +24,6 @@ modules:
     remove:
       packages:
         - nano
-
-  - type: dnf
-    repos:
-      copr:
-        - atim/starship
-    install:
-      packages:
-        - starship
 
   - type: systemd
     system:
